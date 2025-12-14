@@ -1,0 +1,246 @@
+/* --- Root Variables & Base Styles --- */
+:root {
+    --primary-bg: #f4f4f9;
+    --secondary-bg: #ffffff;
+    --primary-text: #333;
+    --secondary-text: #666;
+    --placeholder-text: #aaa;
+    --accent-color: #2c3e50;
+    --accent-hover: #34495e;
+    --error-color: #d9534f;
+    --border-color: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --header-shadow: rgba(0, 0, 0, 0.1);
+    --edit-mode-glow: color-mix(in srgb, var(--accent-color) 35%, transparent);
+}
+
+body.dark-mode {
+    --primary-bg: #121212;
+    --secondary-bg: #1e1e1e;
+    --primary-text: #e0e0e0;
+    --secondary-text: #a0a0a0;
+    --placeholder-text: #666;
+    --error-color: #e57373;
+    --border-color: #444;
+    --shadow-color: rgba(255, 255, 255, 0.05);
+    --header-shadow: rgba(0, 0, 0, 0.5);
+    --edit-mode-glow: color-mix(in srgb, var(--accent-color) 45%, transparent);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+/* --- Utility Classes --- */
+.hidden { display: none !important; }
+
+/* --- Top Controls --- */
+.top-controls-wrapper {
+    max-width: 800px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 0.5rem;
+}
+.top-left-controls, .top-right-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Buttons inside Top Controls */
+#credits-btn, #theme-switcher { 
+
+    background: var(--secondary-bg); border: 1px solid var(--border-color); color: var(--primary-text); border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center; 
+}
+#credits-btn:hover, #theme-switcher:hover { 
+    background-color: var(--primary-bg); 
+    transform: translateY(-2px);
+}
+
+/* Color Picker */
+#color-picker-container { display: flex; align-items: center; gap: 10px; background-color: var(--secondary-bg); padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px var(--shadow-color); }
+#color-picker-container label { font-weight: 400; color: var(--secondary-text); white-space: nowrap; }
+.color-picker-wrapper { position: relative; }
+#theme-color-button { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background-color: var(--primary-bg); border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; color: var(--primary-text); transition: border-color 0.2s; }
+#theme-color-button:hover { border-color: var(--accent-color); }
+#theme-color-preview { width: 20px; height: 20px; border-radius: 50%; background-color: var(--accent-color); border: 1px solid var(--border-color); }
+#color-palette-popup { position: absolute; top: calc(100% + 10px); right: 0; background-color: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 15px var(--shadow-color); padding: 1rem; z-index: 1000; }
+#color-palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform 0.2s; }
+.color-swatch:hover { transform: scale(1.2); }
+
+/* --- Main Container --- */
+.container {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--secondary-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    padding: 2.5rem;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* --- Header --- */
+header { text-align: center; margin-bottom: 2rem; position: relative; padding-bottom: 1rem; }
+header h1 { 
+    font-family: 'Cinzel Decorative', serif; 
+    font-weight: 700; 
+    font-size: 2.5rem; 
+    color: var(--accent-color); 
+    letter-spacing: 2px; 
+    text-shadow: 2px 2px 4px var(--header-shadow); 
+    margin: 0; 
+}
+header::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 100px; 
+    height: 3px; 
+    background-color: var(--accent-color); 
+    opacity: 0.8; 
+    border-radius: 2px;
+}
+
+/* --- API & Model Settings --- */
+.api-settings { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem; 
+    padding: 1.5rem; 
+    border: 1px solid var(--border-color); 
+    border-radius: 8px; 
+    background-color: var(--primary-bg); 
+    margin-bottom: 1.5rem;
+}
+
+.input-group { display: flex; flex-direction: column; }
+.input-group label { font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-text); font-size: 0.9rem; }
+
+input, select, textarea { 
+    width: 100%; 
+    padding: 0.8rem; 
+    border: 1px solid var(--border-color); 
+    border-radius: 6px; 
+    background-color: var(--secondary-bg); 
+    color: var(--primary-text); 
+    font-family: 'Roboto', sans-serif; 
+    font-size: 1rem; 
+    transition: border-color 0.3s, box-shadow 0.3s; 
+}
+input:focus, select:focus, textarea:focus { 
+    outline: none; 
+    border-color: var(--accent-color); 
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 25%, transparent); 
+}
+
+/* --- PDF Uploader Area --- */
+#image-uploader { 
+    width: 100%; 
+    height: 200px;
+    border: 3px dashed var(--border-color); 
+    border-radius: 12px; 
+    margin: 2rem 0; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    color: var(--secondary-text); 
+    cursor: pointer; 
+    background-color: var(--primary-bg); 
+    transition: all 0.3s ease; 
+}
+#image-uploader i { color: var(--accent-color); transition: transform 0.3s; }
+#image-uploader:hover { 
+    border-color: var(--accent-color); 
+    background-color: color-mix(in srgb, var(--accent-color) 5%, var(--primary-bg)); 
+}
+#image-uploader:hover i { transform: scale(1.1); }
+#image-uploader.dragover { 
+    border-color: var(--accent-color); 
+    background-color: color-mix(in srgb, var(--accent-color) 10%, var(--primary-bg)); 
+    transform: scale(0.99);
+}
+#image-uploader.has-file {
+    border-style: solid;
+    border-color: var(--accent-color);
+    background-color: color-mix(in srgb, var(--accent-color) 5%, var(--primary-bg));
+}
+
+/* --- Job Description Area --- */
+.character-inputs { margin-bottom: 1.5rem; }
+textarea#job-description {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+    background-color: var(--secondary-bg);
+}
+
+/* --- Enhance Button --- */
+#enhance-btn { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%; 
+    padding: 1.2rem; 
+    font-size: 1.3rem; 
+    font-weight: bold; 
+    color: white; 
+    background-color: var(--accent-color); 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 4px 10px var(--shadow-color);
+    margin-top: 1rem;
+}
+#enhance-btn:hover { 
+    background-color: var(--accent-hover); 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--shadow-color);
+}
+#enhance-btn:active {
+    transform: translateY(0);
+}
+#enhance-btn:disabled {
+    background-color: var(--neutral-color);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.fa-spin { animation: fa-spin 1s infinite linear; }
+@keyframes fa-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- Responsive Adjustments --- */
+@media screen and (max-width: 768px) {
+    body { padding: 1rem; }
+    .container { padding: 1.5rem; }
+    .api-settings { grid-template-columns: 1fr; gap: 1rem; }
+    header h1 { font-size: 2rem; }
+    #image-uploader { height: 180px; }
+}
+
+@media screen and (max-width: 480px) {
+    .top-controls-wrapper { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+    .top-left-controls, .top-right-controls { justify-content: space-between; }
+    .container { padding: 1rem; border-radius: 0; box-shadow: none; }
+    header h1 { font-size: 1.8rem; }
+}
