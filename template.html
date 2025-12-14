@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Template - Fixed A4</title>
+    <!-- html2pdf CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --font-stack: 'Arial', 'Helvetica', sans-serif;
+            --text-color: #000000;
+            --date-color: #222222;
+            --page-width: 210mm;  /* A4 Width */
+            --page-height: 297mm; /* A4 Height */
+            --content-margin: 20mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #525659; /* Background */
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+            font-family: var(--font-stack);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /*  PAGE CONTAINER  */
+        #resume-page {
+            width: var(--page-width);
+            min-height: var(--page-height);
+            background: white;
+            padding: var(--content-margin);
+            
+            /* Web Viewer */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            
+            overflow: hidden; 
+            position: relative;
+        }
+
+        /*  TYPOGRAPHY */
+        h1 {
+            font-size: 24pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .job-title-header {
+            font-size: 14pt;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .contact-info {
+            font-size: 10pt;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+        }
+
+        h2 {
+            font-size: 12pt;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-bottom: 1px solid #ccc;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 11pt;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        /* DATES  */
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .company-name {
+            font-weight: normal;
+            font-style: italic;
+            font-size: 10pt;
+        }
+
+        .job-date {
+            font-size: 10pt;
+            text-align: right;
+            white-space: nowrap; 
+            min-width: 120px; 
+        }
+
+        /*  TEXT   */
+        p, li {
+            font-size: 10.5pt;
+            line-height: 1.5;
+            color: #111;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 3px;
+        }
+
+        .entry {
+            margin-bottom: 15px;
+            break-inside: avoid;
+        }
+
+        /* CONTROL BUTTONS  */
+        #controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: sans-serif;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        #pdf-btn {
+            background-color: #e74c3c; /* Red for pdf */
+        }
+        #pdf-btn:hover { background-color: #c0392b; }
+
+        #html-btn {
+            background-color: #2c3e50; /* Dark for html */
+        }
+        #html-btn:hover { background-color: #1a252f; }
+
+
+        @media print {
+            body { background: none; padding: 0; }
+            #resume-page { box-shadow: none; margin: 0; width: 100%; }
+            #controls { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CONTROL BUTTONS -->
+    <div id="controls">
+        <button id="pdf-btn" class="btn" onclick="exportPDF()">Download PDF</button>
+        <button id="html-btn" class="btn" onclick="downloadHTML()">Download HTML</button>
+    </div>
+
+    <!-- RESUME CONTENT -->
+    <div id="resume-page">
+        
+        <!-- HEADER -->
+        <header>
+            <h1>Name Surname</h1>
+            <div class="job-title-header">Job as Target Title</div>
+            <div class="contact-info">
+                City, Country | phone number | email address | linkedin url
+            </div>
+        </header>
+
+        <!-- SUMMARY -->
+        <section>
+            <h2>Summary</h2>
+            <p>
+                Concise professional summary going here. Focus on keywords relevant to the job description. Keep it under 4 lines for maximum readability. This text should not be cut off in the exported PDF.
+            </p>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section>
+            <h2>Experience</h2>
+
+            <div class="entry">
+                <h3>Job 1 Title</h3>
+                <div class="job-header">
+                    <span class="company-name">Company Name</span>
+                    <span class="job-date">Start Date – End Date</span>
+                </div>
+                <ul>
+                    <li>Accomplishment number one utilizing specific skills and results.</li>
+                    <li>Accomplishment number two utilizing specific skills and results.</li>
+                    <li>Accomplishment number three utilizing specific skills and results.</li>
+                </ul>
+            </div>
+
+            <div class="entry">
+                <h3>Job 2 Title</h3>
+                <div class="job-header">
+                    <span class="company-name">Company Name</span>
+                    <span class="job-date">Start Date – End Date</span>
+                </div>
+                <ul>
+                    <li>Accomplishment number one utilizing specific skills and results.</li>
+                    <li>Accomplishment number two utilizing specific skills and results.</li>
+                </ul>
+            </div>
+
+            <div class="entry">
+                <h3>Job 3 Title</h3>
+                <div class="job-header">
+                    <span class="company-name">Company Name</span>
+                    <span class="job-date">Start Date – End Date</span>
+                </div>
+                <ul>
+                    <li>Accomplishment number one utilizing specific skills and results.</li>
+                    <li>Accomplishment number two utilizing specific skills and results.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section>
+            <h2>Education</h2>
+            
+            <div class="entry">
+                <h3>Degree Name</h3>
+                <div class="job-header">
+                    <span class="company-name">University / Institution</span>
+                    <span class="job-date">Year Graduated</span>
+                </div>
+            </div>
+
+            <div class="entry">
+                <h3>Certification Name</h3>
+                <div class="job-header">
+                    <span class="company-name">Organization</span>
+                    <span class="job-date">Year Completed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section>
+            <h2>Skills</h2>
+            <div class="entry">
+                <p>
+                    Skill 1, Skill 2, Skill 3, Skill 4, Skill 5, Skill 6, Skill 7, Skill 8
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC, YOU MUST EXPORT THSI AS WELL -->
+    <script>
+        function exportPDF() {
+            const element = document.getElementById('resume-page');
+            
+            const originalShadow = element.style.boxShadow;
+            element.style.boxShadow = 'none';
+            const opt = {
+                margin:       0, 
+                filename:     'resume.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.style.boxShadow = originalShadow;
+            });
+        }
+
+        function downloadHTML() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "resume_template.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
