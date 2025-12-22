@@ -1,90 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resume Enhancer AI</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Roboto:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-  </head>
-  <body>
-    <!-- Top Controls: Credits, Dark Mode, Theme Color -->
-    <div class="top-controls-wrapper">
-      <div class="top-left-controls">
-        <button id="credits-btn" title="Created by Joshua">
-          <i class="fas fa-copyright"></i>
-        </button>
-      </div>
 
-      <div class="top-right-controls">
-        <button id="theme-switcher" title="Toggle Dark Mode">
-          <i class="fas fa-moon"></i>
-        </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Enhancer AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Roboto:wght@300;400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="icon" href="Images/icon.png" type="image/x-icon">
+</head>
 
-        <div id="color-picker-container">
-          <label for="theme-color-button">Theme</label>
-          <div class="color-picker-wrapper">
-            <button id="theme-color-button">
-              <span id="theme-color-preview"></span>
-              <i class="fas fa-caret-down"></i>
-            </button>
-            <div id="color-palette-popup" class="hidden">
-              <div id="color-palette"></div>
-            </div>
+<body>
+  <!-- Top Controls: Credits, Dark Mode, Theme Color -->
+  <div class="top-controls-wrapper">
+    <div class="top-left-controls">
+      <button id="credits-btn" title="Created by Joshua">
+        <i class="fas fa-copyright"></i>
+      </button>
+    </div>
+
+    <div class="top-right-controls">
+      <button id="theme-switcher" title="Toggle Dark Mode">
+        <i class="fas fa-moon"></i>
+      </button>
+
+      <div id="color-picker-container">
+        <label for="theme-color-button">Theme</label>
+        <div class="color-picker-wrapper">
+          <button id="theme-color-button">
+            <span id="theme-color-preview"></span>
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div id="color-palette-popup" class="hidden">
+            <div id="color-palette"></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container">
-      <header>
-        <h1>Resume Enhancer AI</h1>
-      </header>
+  <div class="container">
+    <header>
+      <h1>Resume Enhancer AI</h1>
+    </header>
 
-      <main id="setup-section">
-        <!-- API & Model Selection -->
-        <div class="api-settings">
-          <div class="input-group">
-            <label for="api-key">Gemini API Key</label>
-            <input
-              type="password"
-              id="api-key"
-              autocomplete="off"
-              placeholder="Paste your API Key here..."
-            />
-          </div>
-          <div class="input-group">
-            <label for="model-select">AI Model</label>
-            <select id="model-select">
-              <option value="gemini-2.0-flash-exp">Gemini 3.0 Pro</option>
-              <option value="gemini-1.5-pro-latest">Gemini 2.5 Pro</option>
-              <option value="gemini-1.5-flash-latest">Gemini 2.5 Flash</option>
-            </select>
-          </div>
+    <main id="setup-section">
+      <!-- API & Model Selection -->
+      <div class="api-settings">
+        <div class="input-group">
+          <label for="api-key">Gemini API Key</label>
+          <input type="password" id="api-key" autocomplete="off" placeholder="Paste your API Key here..." />
         </div>
+        <div class="input-group">
+          <label for="model-select">AI Model</label>
+          <select id="model-select">
+            <option value="gemini-2.0-flash-exp">Gemini 3.0 Pro</option>
+            <option value="gemini-1.5-pro-latest">Gemini 2.5 Pro</option>
+            <option value="gemini-1.5-flash-latest">Gemini 2.5 Flash</option>
+          </select>
+        </div>
+      </div>
 
-        <hr
-          style="
+      <hr style="
             border: 0;
             border-top: 1px solid var(--border-color, #444);
             margin: 20px 0;
-          "
-        />
+          " />
 
-        <!-- PDF Upload Section -->
-        <label
-          id="image-uploader"
-          for="pdf-file-input"
-          style="
+      <!-- PDF Upload Section -->
+      <label id="image-uploader" for="pdf-file-input" style="
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -93,41 +82,30 @@
             border: 2px dashed #666;
             padding: 20px;
             border-radius: 10px;
-          "
-        >
-          <i
-            class="fas fa-file-pdf fa-3x"
-            style="margin-bottom: 10px; opacity: 0.7"
-          ></i>
-          <p>Drag & Drop PDF Resume here</p>
-          <span style="font-size: 0.8rem; opacity: 0.6">(Click to browse)</span>
-        </label>
-        <input
-          type="file"
-          id="pdf-file-input"
-          class="hidden"
-          accept="application/pdf"
-        />
+          ">
+        <i class="fas fa-file-pdf fa-3x" style="margin-bottom: 10px; opacity: 0.7"></i>
+        <p>Drag & Drop PDF Resume here</p>
+        <span style="font-size: 0.8rem; opacity: 0.6">(Click to browse)</span>
+      </label>
+      <input type="file" id="pdf-file-input" class="hidden" accept="application/pdf" />
 
-        <!-- Job Description Input -->
-        <div class="character-inputs" style="margin-top: 20px">
-          <div class="input-group">
-            <label for="job-description">Target Job Details</label>
-            <textarea
-              id="job-description"
-              rows="8"
-              placeholder="Paste the Job Title and the full Job Description here.&#10;&#10;Example:&#10;Job Title: Senior Product Manager&#10;Description: We are looking for..."
-              style="width: 100%; resize: vertical"
-            ></textarea>
-          </div>
+      <!-- Job Description Input -->
+      <div class="character-inputs" style="margin-top: 20px">
+        <div class="input-group">
+          <label for="job-description">Target Job Details</label>
+          <textarea id="job-description" rows="8"
+            placeholder="Paste the Job Title and the full Job Description here.&#10;&#10;Example:&#10;Job Title: Senior Product Manager&#10;Description: We are looking for..."
+            style="width: 100%; resize: vertical"></textarea>
         </div>
+      </div>
 
-        <!-- Action Button -->
-        <button id="enhance-btn" style="margin-top: 20px">Enhance</button>
-      </main>
-    </div>
+      <!-- Action Button -->
+      <button id="enhance-btn" style="margin-top: 20px">Enhance</button>
+    </main>
+  </div>
 
-    <!-- Main Logic Script -->
-    <script type="module" src="script.js"></script>
-  </body>
+  <!-- Main Logic Script -->
+  <script type="module" src="script.js"></script>
+</body>
+
 </html>
